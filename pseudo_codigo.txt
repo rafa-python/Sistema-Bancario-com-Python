@@ -1,0 +1,20 @@
+- criar conta
+    pede cpf
+    se cpf nao existir então
+    pede nome
+    pede senha
+    pede deposito minimo de 100 reais
+    agencia por padrão é 0001
+    conta ele verifica as contas cadastradas e da uma nova numeração para a conta
+    adiciona a conta a lista de contas e vai para menu usuario
+
+    se cpf existir então pede senha
+
+- fazer login
+    pede cpf
+    pede senha
+    verifica se cpf existe e compara a senha
+    
+    se senha correta então ir para menu usuario
+
+
