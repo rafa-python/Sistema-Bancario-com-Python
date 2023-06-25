@@ -2,24 +2,25 @@ cpf = ""
 senha = ""
 contas = [
     {
-        'cpf': "04785236951",
-        'conta': '3',
-        'agencia': '0001',
-        'nome': 'carlos', 
-        'senha': "1234",
-        'saldo': 'saldo',
-        'extrato': 'extrato'
+        "cpf": "04785236951",
+        "conta": "3",
+        "agencia": "0001",
+        "nome": "carlos",
+        "senha": "1234",
+        "saldo": "1500",
+        "extrato": "extrato",
     },
-    {   
-        'cpf': "57852145639",
-        'conta': '4',
-        'agencia': '0001',
-        'nome': 'Jorge', 
-        'senha': "12345",
-        'saldo': '100',
-        'extrato': '========Extrato========\n\tSaldo inicial: R$100.00\n'
-    }
-    ]
+    {
+        "cpf": "57852145639",
+        "conta": "4",
+        "agencia": "0001",
+        "nome": "Jorge",
+        "senha": "12345",
+        "saldo": "100",
+        "extrato": "========Extrato========\n\tSaldo inicial: R$100.00\n",
+    },
+]
+
 
 # verifica se conta existe
 def verifica_se_existe(oque_busco, onde_busco):
@@ -27,32 +28,34 @@ def verifica_se_existe(oque_busco, onde_busco):
     for conta in contas:
         if conta[onde_busco] == oque_busco:
             return True
-        
+
     return False
-    
+
+
 def while_menu_usuario():
     global cpf
     while True:
         op = menu_usuario()
         if op == "1":
-            valor = float(input("Informe o valor do deposito: R$ ")) 
+            valor = float(input("Informe o valor do deposito: R$ "))
             depositar(valor, cpf)
-        
+
         elif op == "2":
             valor = float(input("Informe o valor do saque: R$ "))
             sacar(cpf, valor)
-        
+
         elif op == "3":
             exibe_extrato(cpf)
-        
+
         elif op == "4":
             exibe_saldo(cpf)
-        
-        elif op == '5':
+
+        elif op == "5":
             print("\t=>Saindo...")
             quit()
         else:
             print("Nenhuma opção valida.")
+
 
 # menu do usuario
 def menu_usuario():
@@ -66,14 +69,15 @@ def menu_usuario():
     => """
     return input(menu)
 
+
 # depositar
 def depositar(valor, cpf):
     for conta in contas:
-        if conta['cpf'] == cpf:
-            saldo = float(conta['saldo'])
+        if conta["cpf"] == cpf:
+            saldo = float(conta["saldo"])
             novo_saldo = saldo + valor
-            conta['saldo'] = novo_saldo
-            conta['extrato'] += f"\tDeposito de R${valor:.2f}\n"
+            conta["saldo"] = novo_saldo
+            conta["extrato"] += f"\tDeposito de R${valor:.2f}\n"
             print("=================================================")
             print(f"Deposito de R${valor:.2f} realizado com sucesso.")
             print(f"Novo saldo: R${novo_saldo:.2f}")
@@ -81,32 +85,34 @@ def depositar(valor, cpf):
             input()
             break
 
+
 def exibe_extrato(cpf: str):
     for conta in contas:
-        if conta['cpf'] == cpf:
-            saldo = float(conta['saldo'])
+        if conta["cpf"] == cpf:
+            saldo = float(conta["saldo"])
             print(f"\t{conta['extrato']}")
             print(f"\t=>Saldo atual: R${saldo:.2f}")
             input()
             break
 
+
 def exibe_saldo(cpf):
     for conta in contas:
-        if conta['cpf'] == cpf:
-            saldo = float(conta['saldo'])
+        if conta["cpf"] == cpf:
+            saldo = float(conta["saldo"])
             print(f"\t=>Saldo atual: R${saldo:.2f}")
             input()
             break
 
+
 def sacar(cpf, valor: float):
     for conta in contas:
-        
-        if conta['cpf'] == cpf:
-            saldo = float(conta['saldo'])
+        if conta["cpf"] == cpf:
+            saldo = float(conta["saldo"])
             if valor <= saldo and valor > 0 and valor != "":
                 novo_saldo = saldo - valor
-                conta['saldo'] = novo_saldo
-                conta['extrato'] += f"\tSaque de R${valor:.2f}\n"
+                conta["saldo"] = novo_saldo
+                conta["extrato"] += f"\tSaque de R${valor:.2f}\n"
                 print(f"Saque de R${valor:.2f} realizado com sucesso.")
                 input()
                 break
@@ -114,6 +120,7 @@ def sacar(cpf, valor: float):
                 print("Valor invalido ou saldo insuficiente.")
                 input()
                 break
+
 
 def acessar_conta():
     global cpf, senha
@@ -129,18 +136,25 @@ def acessar_conta():
         print("Senha ou CPF invalido.")
         print("Retornando ao menu principal...")
         print("=================================")
-        #menu_login_ou_criar_conta_e_adm()
+        # menu_login_ou_criar_conta_e_adm()
+
 
 def criar_conta():
     global cpf, senha, contas
+
     cpf = input("Informe o cpf: ")
     if verifica_se_existe(cpf, "cpf"):
         print("Usuario ja cadastrado, redirecionando para login.")
-        senha = input("Informe a senha de acesso: ")
-        if verifica_se_existe(senha, "senha"):
-            print("Carregando menu do usuario... tecle enter para ir")
-            input()
-            while_menu_usuario()
+
+        while True:
+            senha = input("Informe a senha de acesso: ")
+            if verifica_se_existe(senha, "senha"):
+                print("Carregando menu do usuario... tecle enter para ir")
+                input()
+                while_menu_usuario()
+
+            else:
+                print("Senha invalida, tente novamente.")
     else:
         while True:
             nome = input("Informe nome completo: ")
@@ -157,7 +171,9 @@ def criar_conta():
                 break
 
         while True:
-            saldo = input("Informe o valor do deposito inicial ou enter para nao depositar: R$ ")
+            saldo = input(
+                "Informe o valor do deposito inicial ou enter para nao depositar: R$ "
+            )
             if float(saldo) > 0 or saldo == "":
                 saldo = float(saldo)
                 break
@@ -165,31 +181,30 @@ def criar_conta():
                 print("Informe uma opção valida")
 
         # forma de pegar o maior numero em contas
-        maior = max(contas, key=lambda x: int(x['conta']))
-        nova_conta = int(maior['conta']) + 1
+        maior = max(contas, key=lambda x: int(x["conta"]))
+        nova_conta = int(maior["conta"]) + 1
 
-        contas.append({
-            'cpf': cpf,
-            'conta': nova_conta,
-            'agencia': "0001",
-            'nome': nome, 
-            'senha': senha,
-            'saldo': saldo,
-            'extrato': f'========Extrato========\n\tSaldo inicial: R${saldo:.2f}\n'
-
-        })
+        contas.append(
+            {
+                "cpf": cpf,
+                "conta": nova_conta,
+                "agencia": "0001",
+                "nome": nome,
+                "senha": senha,
+                "saldo": saldo,
+                "extrato": f"========Extrato========\n\tSaldo inicial: R${saldo:.2f}\n",
+            }
+        )
         print("Conta criada com sucesso.")
         print("Seus dados bancarios são:")
         ultimo_dicionario = contas[-1]
         print("============================")
-        for c,v in ultimo_dicionario.items():
-            if c == 'extrato':
+        for c, v in ultimo_dicionario.items():
+            if c == "extrato":
                 break
             print(f"{c}: {v}")
         print("============================")
 
-def login_adm():
-    ...
 
 def menu_login_ou_criar_conta_e_adm():
     menu = """
@@ -197,14 +212,11 @@ def menu_login_ou_criar_conta_e_adm():
     [1] Acessar conta
     [2] Criar conta
     [3] Sair
-    --------------------------------------
-    [4] Para administradores
-    --------------------------------------
     => """
     return input(menu)
 
+
 if __name__ == "__main__":
- 
     while True:
         op = menu_login_ou_criar_conta_e_adm()
 
@@ -214,8 +226,5 @@ if __name__ == "__main__":
             criar_conta()
         elif op == "3":
             quit()
-        elif op == "4":
-            ...
         else:
             print("Opção invalida.")
-
